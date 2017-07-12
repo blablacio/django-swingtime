@@ -1,4 +1,5 @@
 import warnings
+import importlib
 from datetime import datetime, date, timedelta
 from dateutil import rrule
 
@@ -59,6 +60,16 @@ if swingtime_settings.USE_CONCRETE_MODELS:
     class Occurrence(base_models.OccurrenceBase):
         class Meta:
             app_label = 'swingtime'
+else:
+    if swingtime_settings.EVENT_MODEL:
+        package, model = swingtime_settings.EVENT_MODEL.rsplit('.', 1)
+        Event = getattr(importlib.import_module(package), model)
+    if swingtime_settings.EVENT_TYPE_MODEL:
+        package, model = swingtime_settings.EVENT_TYPE_MODEL.rsplit('.', 1)
+        EventType = getattr(importlib.import_module(package), model)
 
+    if swingtime_settings.OCCURRENCE_MODEL:
+        package, model = swingtime_settings.OCCURRENCE_MODEL.rsplit('.', 1)
+        Occurrence = getattr(importlib.import_module(package), model)
 
 create_event = base_models.event_creation_factory(Event, EventType)
