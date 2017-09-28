@@ -1,17 +1,23 @@
-Demo
-====
+Demos
+=====
 
-Swingtime comes with its own demo project and application. The demo is themed as 
-a Karate studio's website and allows you see and interact with the Swingtime
-application.
+Swingtime comes with its two demo projects: a basic demo for standard usage, and 
+a demo showcasing the use of abstract base models for creating your own inherited
+modles.
 
-Within the Swingtime demo is an app named ``karate``, which defines the custom
+Basic Demo
+----------
+
+The demo is themed as a Karate studio's website and allows you see and interact
+with the Swingtime application and default forms.
+
+Within the basic demo is an app named ``karate``, which defines the custom
 management command ``loaddemo``. This command will pre-populate your 
 initial database with some events and occurrences based upon the current date and
 time.
 
-Currently, Swingtime does not include any templates of its own. The demo project
-provides some sample templates to use as a guide or starting point.
+Currently, Swingtime does not include any templates of its own. The basedsic demo
+project provides some sample templates to use as a guide or starting point.
 
 Running the demo
 ----------------

@@ -193,14 +193,12 @@ class TestCreation:
             'Something completely different',
             event_type=('abbr', 'Abbreviation'),
             start_time=datetime(2008,12,1, 12),
-            note='Here it is',
             freq=rrule.WEEKLY,
             byweekday=(rrule.TU, rrule.TH),
             until=datetime(2008,12,31)
         )
         assert True == isinstance(e.event_type, EventType)
         assert e.event_type.abbr == 'abbr'
-        assert str(e.notes.all()[0]) == 'Here it is'
         occs = list(e.occurrence_set.all())
         for i, day in zip(range(len(occs)), [2, 4, 9, 11, 16, 18, 23, 25, 30]):
             o = occs[i]

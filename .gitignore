@@ -1,13 +1,12 @@
 *.log
 *.pot
 *.pyc
-karate.db
-demo/static
-/build
+karate.sqlite
+demos/basic/static
 MANIFEST
 dist
 .tox/
 django_swingtime.egg-info/
-/dev
+build/
 .cache/
 .coverage

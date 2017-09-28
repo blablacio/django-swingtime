@@ -36,7 +36,8 @@ def event_listing(
     ... plus all values passed in via **extra_context
     '''
     if events is None:
-        events = Event.objects.all()
+        event_cls = extra_context.pop('event_cls', Event)
+        events = event_cls.objects.all()
     
     extra_context['events'] = events
     return render(request, template, extra_context)
@@ -47,7 +48,8 @@ def event_view(
     pk,
     template='swingtime/event_detail.html',
     event_form_class=forms.EventForm,
-    recurrence_form_class=forms.MultipleOccurrenceForm
+    recurrence_form_class=forms.MultipleOccurrenceForm,
+    event_cls=Event
 ):
     '''
     View an ``Event`` instance and optionally update either the event or its
@@ -64,7 +66,7 @@ def event_view(
     ``recurrence_form``
         a form object for adding occurrences
     '''
-    event = get_object_or_404(Event, pk=pk)
+    event = get_object_or_404(event_cls, pk=pk)
     event_form = recurrence_form = None
     if request.method == 'POST':
         if '_update' in request.POST:
@@ -93,7 +95,8 @@ def occurrence_view(
     event_pk,
     pk,
     template='swingtime/occurrence_detail.html',
-    form_class=forms.SingleOccurrenceForm
+    form_class=forms.SingleOccurrenceForm,
+    occurrence_cls=Occurrence
 ):
     '''
     View a specific occurrence and optionally handle any updates.
@@ -106,7 +109,7 @@ def occurrence_view(
     ``form``
         a form object for updating the occurrence
     '''
-    occurrence = get_object_or_404(Occurrence, pk=pk, event__pk=event_pk)
+    occurrence = get_object_or_404(occurrence_cls, pk=pk, event__pk=event_pk)
     if request.method == 'POST':
         form = form_class(request.POST, instance=occurrence)
         if form.is_valid():
@@ -263,7 +266,6 @@ def year_view(request, year, template='swingtime/yearly_view.html', queryset=Non
         'by_month': [(dt, list(o)) for dt,o in itertools.groupby(occurrences, group_key)],
         'next_year': year + 1,
         'last_year': year - 1
-        
     })
 
 

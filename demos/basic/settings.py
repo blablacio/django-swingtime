@@ -18,7 +18,7 @@ sys.path.extend([
 DEBUG = True
 DATABASES = {'default': {
     'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': 'karate.db',
+    'NAME': 'karate.sqlite',
 }}
 LANGUAGES = (('en', 'English'),)
 STATIC_URL = '/static/'
