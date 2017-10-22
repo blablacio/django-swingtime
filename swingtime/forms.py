@@ -191,6 +191,18 @@ class SplitDateTimeWidget(forms.MultiWidget):
 
         return [None, None]
 
+    def value_from_datadict(self, data, files, name):
+        datelist = [
+            widget.value_from_datadict(data, files, name + '_%s' % i)
+            for i, widget in enumerate(self.widgets)]
+
+        try:
+            dt = datetime.strptime('{} {}'.format(*datelist), '%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            return ''
+        else:
+            return dt
+
 
 class MultipleOccurrenceForm(forms.Form):
     day = forms.DateField(
