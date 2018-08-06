@@ -9,6 +9,7 @@ import itertools
 from django.db.models.query import QuerySet
 from django.utils.safestring import mark_safe
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.timezone import make_aware
 
 from dateutil import rrule
 from .conf import swingtime_settings
@@ -128,7 +129,7 @@ def create_timeslot_table(
     '''
     dt = dt or datetime.now()
     start_time = start_time.replace(tzinfo=dt.tzinfo) if not start_time.tzinfo else start_time
-    dtstart = datetime.combine(dt.date(), start_time)
+    dtstart = make_aware(datetime.combine(dt.date(), start_time))
     dtend = dtstart + end_time_delta
 
     if isinstance(items, QuerySet):
